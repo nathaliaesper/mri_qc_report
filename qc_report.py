@@ -127,12 +127,11 @@ def print_xcp_values(xcp_values, ax):
 
 
 def create_structural_report(subject_path):
-	subj = 'sub-NDARJJ173BRX'
 	logo_image = "ChildMindInstitute_Logo_Horizontal_OneColor_Blue_RGB.png"
-	func_norm_pattern = subj + '/ses-*/func/*task-rest*reg-*desc-preproc_bold.nii.gz'
-	func_coreg_pattern = subj + '/ses-*/func/*task-rest*space-T1w_sbref.nii.gz'
-	anat_norm_pattern = subj + '/ses-*/anat/*desc-head_T1w.nii.gz'
-	anat_coreg_pattern = subj + '/ses-*/anat/*desc-head_T1w.nii.gz'
+	func_norm_pattern = subject_path + '/ses-*/func/*task-rest*reg-*desc-preproc_bold.nii.gz'
+	func_coreg_pattern = subject_path + '/ses-*/func/*task-rest*space-T1w_sbref.nii.gz'
+	anat_norm_pattern = subject_path + '/ses-*/anat/*desc-head_T1w.nii.gz'
+	anat_coreg_pattern = subject_path + '/ses-*/anat/*desc-head_T1w.nii.gz'
 
 	func_norm = glob.glob(func_norm_pattern)
 	func_norm_count = (np.size(func_norm) * 2) + np.size(func_norm)
@@ -189,10 +188,9 @@ def create_structural_report(subject_path):
 
 
 def create_functional_report(subject_path):
-	subj = 'sub-NDARJJ173BRX'
 	logo_image = "ChildMindInstitute_Logo_Horizontal_OneColor_Blue_RGB.png"
 
-	func_pattern = subj + '/ses-*/func/*task-rest*space-*desc-preproc_bold.nii.gz'
+	func_pattern = subject_path + '/ses-*/func/*task-rest*space-*desc-preproc_bold.nii.gz'
 	functional_data = glob.glob(func_pattern)
 
 	pcc_coords = [(0, -52, 18)]
@@ -229,11 +227,10 @@ def create_functional_report(subject_path):
 
 
 def create_segmentation_report(subject_path):
-	subj = 'sub-NDARJJ173BRX'
 	logo_image = "ChildMindInstitute_Logo_Horizontal_OneColor_Blue_RGB.png"
 
-	anatomical_pattern = subj + '/ses-*/anat/*desc-preproc_T1w.nii.gz'
-	segmentation_pattern = subj + '/ses-*/anat/*_label*_mask.nii.gz'
+	anatomical_pattern = subject_path + '/ses-*/anat/*desc-preproc_T1w.nii.gz'
+	segmentation_pattern = subject_path + '/ses-*/anat/*_label*_mask.nii.gz'
 
 	segmentation_files = glob.glob(segmentation_pattern)
 	segmentation_count = np.size(segmentation_files) * 2
@@ -254,7 +251,7 @@ def create_segmentation_report(subject_path):
 					d = plot_roi(segmentation_image, bg_img=anat_file, display_mode='z', cmap='GnBu', alpha=1.0, axes = axes[axes_idx])
 					d.title(os.path.basename(segmentation_image), size = 10)
 
-					plot_roi(segmentation_image, bg_img = anat_file, display_mode = 'x', cmap = 'GnBu', alpha = 1.0, axes = axes[axes_idx+1])
+					plot_roi(segmentation_image, bg_img = anat_file, display_mode = 'x', cut_coords = [50, 38, 15, 0, -15, -38, -50], cmap = 'GnBu', alpha = 1.0, axes = axes[axes_idx+1])
 					axes_idx += 2
 
 				
